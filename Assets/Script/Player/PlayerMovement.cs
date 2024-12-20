@@ -1,6 +1,5 @@
 using UnityEngine;
 using GabrielBigardi.SpriteAnimator;
-using UnityEngine.AI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -38,8 +37,8 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            rb.velocity = Vector2.zero;
-            SpriteAnimator.Play("Idle");
+            // disable the x velocity
+            rb.velocity = new Vector2(0, rb.velocity.y);
         }
     }
 
@@ -91,6 +90,13 @@ public class PlayerMovement : MonoBehaviour
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
         }
+    }
+
+    public void PlayerDead()
+    {
+         SpriteAnimator.Play("Dead");
+        allowMovement = false;
+        transform.position = new Vector2(transform.position.x, transform.position.y + 2);
     }
 
 }

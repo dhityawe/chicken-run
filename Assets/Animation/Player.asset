@@ -24,3 +24,8 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 82cd86ef1d6240c4f91ebe4a06427f54, type: 3}
     - {fileID: 21300000, guid: d46133f3610f24f4db6feeeec66fa6d1, type: 3}
     SpriteAnimationType: 0
+  - Name: Dead
+    FPS: 0
+    Frames:
+    - {fileID: 21300000, guid: 1bc226219cc99df45b53abb8359f509b, type: 3}
+    SpriteAnimationType: 0
