@@ -50,7 +50,27 @@ public class NextLevel : MonoBehaviour
         // Wait an additional 2 seconds before loading the next level
         yield return new WaitForSeconds(2f);
 
-        // Load the next scene (e.g., "Level 2")
-        SceneManager.LoadScene("Level 2");
+        // Determine the next scene to load
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        string nextSceneName = GetNextSceneName(currentSceneName);
+
+        // Load the determined next scene
+        SceneManager.LoadScene(nextSceneName);
+    }
+
+    private string GetNextSceneName(string currentSceneName)
+    {
+        // Determine the next level based on the current scene name
+        switch (currentSceneName)
+        {
+            case "Level 1":
+                return "Level 2";
+            case "Level 2":
+                return "Level 3";
+            case "Level 3":
+                return "MainMenu";
+            default:
+                return "MainMenu"; // Fallback if no match is found
+        }
     }
 }

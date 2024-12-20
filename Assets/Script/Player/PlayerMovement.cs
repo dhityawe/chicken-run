@@ -1,8 +1,13 @@
 using UnityEngine;
 using GabrielBigardi.SpriteAnimator;
+using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Player Settings")]
+    public float spawnPointX = -13f;
+    public float spawnPointY = -6.73f;
+
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
     public float jumpForce = 10f;
@@ -98,5 +103,71 @@ public class PlayerMovement : MonoBehaviour
         allowMovement = false;
         transform.position = new Vector2(transform.position.x, transform.position.y + 2);
     }
+
+    public void BackToSpawn()
+    {
+        allowMovement = true;
+        transform.position = new Vector2(spawnPointX, spawnPointY);
+    }
+
+    public void InvulnerableTime()
+    {
+        // start coroutine to make the player invulnerable for 1 second
+        StartCoroutine(Invulnerable());
+    }
+
+    private IEnumerator Invulnerable()
+    {
+        allowMovement = false; // Disable player movement
+        float duration = 2f; // Total duration of invulnerability
+        float changeInterval = 0.3f; // Time to transition between opacity levels
+        float elapsedTime = 0f;
+
+        // While invulnerability duration has not elapsed
+        while (elapsedTime < duration)
+        {
+            // Fade out to 100 opacity
+            yield return FadeOpacity(250f / 255f, 100f / 255f, changeInterval);
+
+            // Fade in to 250 opacity
+            yield return FadeOpacity(100f / 255f, 250f / 255f, changeInterval);
+
+            elapsedTime += 2 * changeInterval; // Account for both fade-out and fade-in durations
+        }
+
+        // Reset sprite opacity to full (250)
+        spriteRenderer.color = new Color(
+            spriteRenderer.color.r, 
+            spriteRenderer.color.g, 
+            spriteRenderer.color.b, 
+            250f / 255f
+        );
+
+        allowMovement = true; // Re-enable player movement
+    }
+
+    private IEnumerator FadeOpacity(float from, float to, float duration)
+    {
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+
+            // Smoothly interpolate the opacity
+            float currentOpacity = Mathf.Lerp(from, to, elapsedTime / duration);
+            spriteRenderer.color = new Color(
+                spriteRenderer.color.r, 
+                spriteRenderer.color.g, 
+                spriteRenderer.color.b, 
+                currentOpacity
+            );
+
+            yield return null; // Wait for the next frame
+        }
+    }
+
+
+
 
 }

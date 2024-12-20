@@ -8,12 +8,11 @@ public class UiButton : MonoBehaviour
         // Load the first level
         SceneManager.LoadScene("Level 1");
     }
-
+    
     public void Retry()
     {
-        // Get the current active scene and reload it
-        Scene currentScene = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(currentScene.name);
+        // back to level 1
+        SceneManager.LoadScene("Level 1");
     }
 
     public void BackToMenu()
