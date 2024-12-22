@@ -83,6 +83,7 @@ public class Obstacle : MonoBehaviour
             }
             else
             {
+                AudioManager.Instance.PlaySFX(1); // Play the death sound effect
                 playerMovement.PlayerDead();
 
                 // Start coroutine to delay activating the Game Over panel

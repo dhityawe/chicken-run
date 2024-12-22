@@ -5,6 +5,9 @@ using System.Collections;
 
 public class NextLevel : MonoBehaviour
 {
+    [Header("Audio Settings")]
+    public int musicIndex;
+
     [Header("Win Transition Settings")]
     public GameObject winGamePanel; // The Win Panel
     public Image winGamePanelImage; // The Panel's Image component for opacity control
@@ -13,11 +16,17 @@ public class NextLevel : MonoBehaviour
     private bool isTransitioning = false; // To prevent multiple triggers
     public PlayerMovement playerMovement;
 
+    private void Start() 
+    {
+        AudioManager.Instance.PlayMusic(musicIndex);
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // Check if the object has the PlayerMovement script
         if (collision.GetComponent<PlayerMovement>() != null && !isTransitioning)
         {
+            AudioManager.Instance.PlaySFX(0); // Play the win sound effect
             NextLevelTrigger();
         }
     }
